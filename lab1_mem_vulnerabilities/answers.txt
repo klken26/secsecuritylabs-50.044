@@ -1,1 +1,16 @@
 ## Place your answers here.
+Exercise 1
+We just need to find functions that involves buffers / pointers or even
+accesses the memory address of a variable.
+zookd.c seems like a daemon handler, which will fork() whenever there is
+a new client to handle their requests. Most of the variables are either 
+declared as static or const; Hence they are either not in the stack nor not 
+modifiable during runtime. 
+However, zookd.c runs on functions from http.c and there is a vulnerability
+that can be exploited. As zook handles client HTTP requests and the urls
+are encoded for security, the url_decode() function in http.c decodes them
+to be used in the the http_request_headers() and http_request_line() 
+functions.
+So, being able to exploit the url_decode() function would have a huge
+impact on zook.
+
