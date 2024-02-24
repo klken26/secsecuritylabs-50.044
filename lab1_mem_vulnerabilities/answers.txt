@@ -9,9 +9,18 @@ modifiable during runtime.
 However, zookd.c runs on functions from http.c, we can do code tracing
 to find the functions that can change the stack when zookws is running.
 In the process_client() function in zookd.c, there is a reqpath[4096]
-variable that is parsed as a pointer to the http_request_line() function
-in http.c, which seems like a plausible point of exploitation.
+variable with size 4096 bytes, that is parsed as a pointer to the 
+http_request_line() function in http.c, which will process the http request
+before returning to zookd for handling.
+Hence, the process_client() function seems like a plausible point of 
+exploitation.
 
+Exercise 2
+For this exercise, we will be testing our hypothesis by trying to overflow
+the buffer when it writes to reqpath; Therefore the payload has to be larger
+than 4096 bytes in order to overflow the buffer.
+Format of GET request: GET (payload) HTTP/(version), which sets the syntax
+for the request in exploit-2.py
 
-
-
+Debugging: line 64 in exploit-2.py, reading shell.bin, so mode='rb'
+intead of r.
