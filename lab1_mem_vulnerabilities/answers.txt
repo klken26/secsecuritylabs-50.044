@@ -22,5 +22,6 @@ than 4096 bytes in order to overflow the buffer.
 Format of GET request: GET (payload) HTTP/(version), which sets the syntax
 for the request in exploit-2.py
 
-Debugging: line 64 in exploit-2.py, reading shell.bin, so mode='rb'
-intead of r.
+We are only left with the size of payload required for the overflow to succeed.
+Technically, we do not need to know the exact size as long as it is much larger
+than 4096, hence we chose 5000.
